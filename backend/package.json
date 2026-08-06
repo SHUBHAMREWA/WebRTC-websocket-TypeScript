@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "Dist/index.js",
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"nodemon Dist/index.js\"",
+    "build": "tsc",
+    "start": "nodemon Dist/index.js"
+  },
+  "dependencies": {
+    "@types/uuid": "^10.0.0",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
+    "uuid": "^14.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.13.3",
+    "concurrently": "^10.0.4",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.x",
+    "typescript": "^5.x"
+  }
+}
