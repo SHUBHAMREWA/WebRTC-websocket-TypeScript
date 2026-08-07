@@ -28,13 +28,14 @@ const Room = () => {
 
           socket.emit("join-room" ,  { roomId  :  params.id , peerId : myPeer.id} )    ;
           socket.on('room-user' , getRoomUser ) ; 
-          socket.on("disconnect-user" , (user : string)=>{
+          const disconnectUserHandler = (user : string)=>{
                console.log("this is user is disconnected " , user)
-          })
+          }
+          socket.on("disconnect-user" , disconnectUserHandler)
           
           return () => {
                socket.off('room-user', getRoomUser);
-               socket.off("diconnect-user");
+               socket.off("disconnect-user", disconnectUserHandler);
           }
      }, [params.id, myPeer])
 
@@ -48,4 +49,3 @@ const Room = () => {
 }
 
 export default Room
-

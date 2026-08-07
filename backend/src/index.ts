@@ -35,7 +35,7 @@ const io = new Server(server, {
 
 io.on("connection" , (socket)=>{
       console.log("user is conneted ")  
-      roomHandler(socket) ;     
+      roomHandler(socket, io) ;     
 
       socket.on("disconnect" , ()=>{
           console.log("user is disconnected") 

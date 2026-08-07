@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io'
+import { Server, Socket } from 'socket.io'
 import { v4 as uuidv4 } from 'uuid'
 
 const rooms: Record<string, string[]> = {}
@@ -8,7 +8,9 @@ type RoomParams = {
   peerId: string
 }
 
-export const roomHandler = (socket: Socket) => {
+export const roomHandler = (socket: Socket, io: Server) => {
+
+
   const createRoom = () => {
     const newRoomId = uuidv4()
     rooms[newRoomId] = []
@@ -23,7 +25,7 @@ export const roomHandler = (socket: Socket) => {
 
     socket.join(roomId)
     console.log('joined Confirm')
-    socket.emit('room-user', { roomId, participants: rooms[roomId] })
+    io.to(roomId).emit('room-user', { roomId, participants: rooms[roomId] })
 
     socket.on('disconnect', () => {
       leaveRoom({ roomId, peerId })
@@ -31,15 +33,16 @@ export const roomHandler = (socket: Socket) => {
   }
 
   const leaveRoom = ({ roomId, peerId }: RoomParams) => {
-    console.log('user left the room PEER id', peerId, ' -- userId :  ', socket.id)
+    console.log('user has left the room PEER id', peerId, ' -- userId :  ', socket.id)
 
       rooms[roomId] = rooms[roomId]?.filter((e) => e !== peerId) || [] 
       
       socket.to(roomId).emit("disconnect-user" , peerId)
-      socket.emit('room-user', { roomId, participants: rooms[roomId] })
+      io.to(roomId).emit('room-user', { roomId, participants: rooms[roomId] })
   }
 
-  socket.on('create-room', createRoom)
 
+  // Main Two events ----here 
+  socket.on('create-room', createRoom)
   socket.on('join-room', joinRoom)
 }
