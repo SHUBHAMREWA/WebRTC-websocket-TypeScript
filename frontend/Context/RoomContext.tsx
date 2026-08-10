@@ -1,12 +1,21 @@
 "use client"
 
-import React, { createContext } from 'react';
+import { createContext, type Dispatch, type RefObject } from 'react'
+import socketIO, { type Socket } from 'socket.io-client'
+import type Peer from 'peerjs'
+import type { PeerAction } from './peerActions'
 
-import socketIO from "socket.io-client" ; 
-const ws = "http://localhost:8080"  ;
+const ws = 'http://localhost:8080'
 
+export type RoomContextType = {
+  socket: Socket
+  myPeer: RefObject<Peer | null>
+  peerId: string | null
+  stream: MediaStream | null
+  allPeers: Record<string, { stream: MediaStream }>
+  Peerdipatch: Dispatch<PeerAction>
+}
 
-export  const socket  = socketIO(ws) ;
+export const socket = socketIO(ws)
 
-export const RoomContext = createContext<null | any>(null) ;
-
+export const RoomContext = createContext<RoomContextType | null>(null)

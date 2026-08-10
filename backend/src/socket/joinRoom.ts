@@ -19,12 +19,13 @@ export const roomHandler = (socket: Socket, io: Server) => {
 
   const joinRoom = ({ roomId, peerId }: RoomParams): void => {
     console.log('user joined room with roomID : ', roomId)
-    console.log('userS PEER id', peerId)
+     console.log('userS PEER id', peerId)
 
     if (peerId && !rooms[roomId]?.includes(peerId)) rooms[roomId]?.push(peerId)
 
     socket.join(roomId)
     console.log('joined Confirm')
+    socket.to(roomId).emit("joined-user" , {peerId})
     io.to(roomId).emit('room-user', { roomId, participants: rooms[roomId] })
 
     socket.on('disconnect', () => {

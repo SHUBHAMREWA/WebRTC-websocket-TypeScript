@@ -6,7 +6,7 @@ import { RoomContext } from "@/Context/RoomContext";
 
 const JoinButton: FC = () => {
 
-    const  {socket}  = useContext(RoomContext);
+    const  {socket}  = useContext(RoomContext)!;
 
 
     const createRoom = ()=>{

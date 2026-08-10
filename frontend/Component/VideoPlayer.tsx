@@ -5,7 +5,7 @@ interface VideoPlayerProps {
       stream : MediaStream
 }
 
-const VideoPlayer = ({stream }: VideoPlayerProps) => {   
+const VideoPlayer = ({stream }: VideoPlayerProps , index : string) => {   
 
        const videoRef = useRef<HTMLVideoElement>(null) ;   
 
@@ -26,7 +26,7 @@ const VideoPlayer = ({stream }: VideoPlayerProps) => {
         width={500}
          autoPlay
             style={{
-        transform: "scaleX(-1)",
+        transform: `scaleX(${index})`,
         }}
           />
     </div>
