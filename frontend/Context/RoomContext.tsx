@@ -13,7 +13,8 @@ export type RoomContextType = {
   peerId: string | null
   stream: MediaStream | null
   allPeers: Record<string, { stream: MediaStream }>
-  Peerdipatch: Dispatch<PeerAction>
+  Peerdipatch: Dispatch<PeerAction> 
+  OnScreenShare : () => void
 }
 
 export const socket = socketIO(ws)

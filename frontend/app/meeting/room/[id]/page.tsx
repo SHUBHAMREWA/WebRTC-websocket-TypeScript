@@ -4,11 +4,12 @@ import { useParams } from 'next/navigation'
 import { RoomContext } from '../../../../Context/RoomContext'
 import VideoPlayer from '@/Component/VideoPlayer'
 import { peerAddAction, removePeerAction } from '@/Context/peerActions'
-import type { MediaConnection } from 'peerjs'
-
+import type { MediaConnection } from 'peerjs' ;
+import ShareScreenButton from "@/Component/ShareScreenButton"
+ 
 const Room = () => {
   const params = useParams()
-  const { socket, myPeer, peerId, stream, allPeers, Peerdipatch } = useContext(RoomContext)!
+  const { socket, myPeer, peerId, stream, allPeers, Peerdipatch ,OnScreenShare } = useContext(RoomContext)!
 
   useEffect(() => {
     const roomId = params.id as string | undefined
@@ -75,13 +76,19 @@ const Room = () => {
   console.log('other peersID and Streams :', allPeers)
 
   return (
+    <>
     <div className='flex gap-4 flex-wrap'>
       <VideoPlayer stream={stream} index={"1"} />
 
       {Object.values(allPeers)?.map((peer, index) => {
         return <VideoPlayer key={index} index={index.toString()} stream={peer.stream} />
       })}
-    </div>
+    </div> 
+
+     <div className='fixed bottom-0 w-full p-2 flex justify-center items-center border-t-2 border-t-gray-400'>
+        <ShareScreenButton  onClick = {OnScreenShare} />
+     </div>
+    </>
   )
 }
 
